@@ -3,6 +3,7 @@
           package="com.example.ratinho_sb">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -12,6 +13,15 @@
             android:screenOrientation="sensorPortrait"
             android:supportsRtl="true"
             android:theme="@style/Theme.Ratinho_SB">
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths" />
+        </provider>
         <activity
                 android:name=".SwipeRight"
                 android:exported="true"
@@ -27,5 +37,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>

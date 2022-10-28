@@ -29,6 +29,7 @@
     <string name="ablublubleButton">ABLUBLU</string>
     <string name="eleGostaButton">ELE GOSTA</string>
     <string name="dancaGatinho">DANÇA</string>
+    <string name="pareButton">PARE!</string>
 
     <string name="title_activity_swipe_right">SwipeRight</string>
     <!-- Strings used for fragments for navigation -->

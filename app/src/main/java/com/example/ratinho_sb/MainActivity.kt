@@ -12,18 +12,26 @@ import androidx.core.net.toUri
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 import android.content.Intent
+import android.net.Uri
+import android.os.SystemClock
+import android.renderscript.ScriptGroup.Input
 import android.util.Log
+import android.util.Xml
 import android.view.GestureDetector
+import android.view.View
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.FileProvider
 import androidx.core.view.GestureDetectorCompat
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 
- class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity() {
 
     private lateinit var mDetector : GestureDetectorCompat //lateinit: avisa ao compiler que esse cara não vai ser inicializado agora. Isso evita nullchecks
-
+    private var startPressTime = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -96,7 +104,7 @@ import androidx.core.view.GestureDetectorCompat
             val diffX : Float = e2.getX() - e1.getX()
             if (Math.abs(diffX) > Math.abs(diffY)){
                 if(Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY){
-                    if(diffX > 0){
+                    if(diffX < 0){
                         onSwipeRight()
                     }
                     else onSwipeLeft()
@@ -130,26 +138,80 @@ import androidx.core.view.GestureDetectorCompat
 
         return false
     }*/
-
-
+     /*open class OnViewTouchHoldCustomListener constructor(
+        private val onTouchHoldCallbacl: OnTouchHoldCallback,
+        private val config: TouchHoldConfig = TouchHoldConfig()) : View.OnTouchListener
+        */
 
     fun setButtons(button: Button, toastStr: String, toastLen: Int, rawFile: Int) : MediaPlayer {
         val butSound = MediaPlayer.create(this, rawFile)
-        button.setOnClickListener(){
-            val butToast = Toast.makeText(this, toastStr, toastLen)
-            butToast.show()
-            //val butSound = MediaPlayer.create(this, rawFile)
-            print(butSound.toString())
-            if (butSound.isPlaying()){
-                butSound.stop()
-                butSound.prepare()
-                butSound.start()
+        button.setOnTouchListener(){ v, event ->
+            val movAction = event.action
+            var endTime = 0L
+
+            when(movAction){
+                MotionEvent.ACTION_DOWN ->{
+                    //event.getPointerId(event.actionIndex)
+                    startPressTime = SystemClock.elapsedRealtime()
+                }
+                MotionEvent.ACTION_CANCEL,
+                MotionEvent.ACTION_UP -> {
+                    endTime = SystemClock.elapsedRealtime()
+                    if (endTime - startPressTime > 1000){ //share the file
+                        try{
+                            val fileStream = resources.openRawResource(rawFile)
+                            val soundToShare = File.createTempFile("soundEffect",".mp3")
+                            //copies the sound to a temp file
+                            this.copyFile(fileStream, FileOutputStream(soundToShare))
+                            val fileUri = FileProvider.getUriForFile(applicationContext,
+                                BuildConfig.APPLICATION_ID + ".provider",
+                                soundToShare)
+                            val sendIntent : Intent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_STREAM, fileUri)
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                //type = "plain/text"
+                                type = "audio/*"
+                            }
+                            startActivity(Intent.createChooser(sendIntent,null))
+                        }
+                        catch (e : java.lang.Exception){
+                            e.printStackTrace()
+                        }
+                    }
+                    else{ //sound
+                        val butToast = Toast.makeText(this, toastStr, toastLen)
+                        butToast.show()
+                        //val butSound = MediaPlayer.create(this, rawFile)
+                        print(butSound.toString())
+                        if (butSound.isPlaying()){
+                            butSound.stop()
+                            butSound.prepare()
+                            butSound.start()
+                        }
+                        else
+                            butSound.start()
+                    }
+                    true
+                    startPressTime = 0L
+                }
+                else -> {}
             }
-            else
-                butSound.start()
+            false
         }
         return butSound;
 
     }
+    fun copyFile(originFile : InputStream, resFile: OutputStream){
+        val buffer = ByteArray(1024);
+        var read: Int
+        read = 0
+        while( read != -1) {
+            read = originFile.read(buffer)
+            if (read == -1) break;
+            resFile.write(buffer,0,read)
+        }
+    }
+
 
 }
