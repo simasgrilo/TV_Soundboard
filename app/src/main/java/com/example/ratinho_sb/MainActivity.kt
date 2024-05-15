@@ -115,33 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-/*
-    override fun onTouchEvent(touchEvent: MotionEvent ) : Boolean{
-        var x1 : Float = touchEvent.getX()
-        var x2 : Float = touchEvent.getX()
-        var y1 : Float
-        var y2 : Float
-        if (touchEvent.action == MotionEvent.ACTION_DOWN){
-                x1 = touchEvent.getX()
-                y1 = touchEvent.getY()
-            }
-        if (touchEvent.action == MotionEvent.ACTION_UP){
-                x2 = touchEvent.getX()
-                y2 = touchEvent.getY()
-            if (x1 > x2){
-                var intent : Intent = Intent(this, SwipeRight::class.java)
-                startActivity(intent)
-            }
-            }
-        val test : Toast = Toast.makeText(this, "cu", Toast.LENGTH_SHORT)
-        test.show()
-
-        return false
-    }*/
-     /*open class OnViewTouchHoldCustomListener constructor(
-        private val onTouchHoldCallbacl: OnTouchHoldCallback,
-        private val config: TouchHoldConfig = TouchHoldConfig()) : View.OnTouchListener
-        */
 
     fun setButtons(button: Button, toastStr: String, toastLen: Int, rawFile: Int) : MediaPlayer {
         val butSound = MediaPlayer.create(this, rawFile)

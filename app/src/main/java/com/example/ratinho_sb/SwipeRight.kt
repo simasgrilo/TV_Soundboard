@@ -4,19 +4,13 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.GestureDetectorCompat
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.ratinho_sb.databinding.ActivitySwipeRightBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -30,7 +24,7 @@ class SwipeRight : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_swipe_right)
+        setContentView(R.layout.activity_oraf)
 
         //voltar para a activity anterior swipando para a direita
         val gestureListnener = object : MainActivity.MyGestureListener(){
