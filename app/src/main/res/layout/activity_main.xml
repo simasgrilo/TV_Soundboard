@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- adding fragment in the XML works just like in SAPUI5 -->
+
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -7,59 +9,53 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+
+    <Button
+            android:text="@string/comboButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/buttonCombo"
+            tools:layout_editor_absoluteY="288dp" tools:layout_editor_absoluteX="190dp"/>
+    <Button
+            android:text="@string/ratinhoButton"
+            android:layout_width="166dp"
+            android:layout_height="50dp" android:id="@+id/buttonRatinho"
+            android:visibility="visible"
+            tools:layout_editor_absoluteY="412dp" tools:layout_editor_absoluteX="48dp"/>
+
+    <Button
+            android:text="@string/ihaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/ihaButton"
+            tools:layout_editor_absoluteY="160dp" tools:layout_editor_absoluteX="75dp"/>
+    <Button
+            android:text="Parar áudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/buttonEmergencyStop"
+            app:layout_constraintTop_toBottomOf="@+id/flow"
+            android:layout_marginTop="216dp"
+            app:layout_constraintStart_toStartOf="@+id/buttonRatinho" android:layout_marginStart="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/flow" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.493"/>
+    <androidx.constraintlayout.helper.widget.Flow android:layout_width="wrap_content"
+                                                  android:layout_height="wrap_content" android:id="@+id/flow"
+                                                  app:constraint_referenced_ids="buttonCombo,buttonUepa,buttonRatinho,buttonRapaz,ihaButton"
+                                                  app:flow_wrapMode="aligned"
+                                                  app:layout_constraintEnd_toEndOf="parent"
+                                                  app:layout_constraintStart_toStartOf="parent"
+                                                  app:layout_constraintTop_toTopOf="parent"
+                                                  android:layout_marginTop="132dp"/>
     <Button
             android:text="@string/uepaButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttonUepa"
             android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@+id/buttonRatinho"
-            android:layout_marginStart="44dp" app:layout_constraintTop_toBottomOf="@+id/buttonRapaz"
-            android:layout_marginTop="196dp"/>
-    <Button
-            android:text="@string/ratinhoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/buttonRatinho"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.591"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.191"/>
+            tools:layout_editor_absoluteY="144dp" tools:layout_editor_absoluteX="179dp"/>
     <Button
             android:text="@string/rapazButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttonRapaz"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="48dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="160dp"/>
-    <Button
-            android:text="@string/comboButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/buttonCombo"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.56" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="288dp"/>
-    <Button
-            android:text="Parar áudio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/buttonEmergencyStop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="116dp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.55"/>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true" app:srcCompat="@android:drawable/ic_menu_manage"
-            android:id="@+id/buttonPanel"
-            android:contentDescription="Configurações"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="28dp"/>
-    <Button
-            android:text="@string/ihaButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/ihaButton"
-            app:layout_constraintEnd_toStartOf="@+id/buttonRapaz" android:layout_marginEnd="68dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="160dp" app:layout_constraintHorizontal_bias="0.977"/>
+            tools:layout_editor_absoluteY="193dp" tools:layout_editor_absoluteX="191dp"/>
     <!-- <androidx.fragment.app.FragmentContainerView
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="329dp"

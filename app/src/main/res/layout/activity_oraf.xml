@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SwipeRight" android:id="@+id/coordinatorLayout">
+
+    <Button
+            android:text="@string/cavaloButton"
+            android:layout_width="118dp"
+            android:layout_height="48dp" android:id="@+id/cavaloButton"
+            android:visibility="visible"
+            tools:layout_editor_absoluteY="264dp" tools:layout_editor_absoluteX="44dp"/>
+    <Button
+            android:text="@string/uiButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/uiButton"
+            tools:layout_editor_absoluteY="264dp" tools:layout_editor_absoluteX="274dp"/>
+    <Button
+            android:text="@string/ablublubleButton"
+            android:layout_width="126dp"
+            android:layout_height="49dp" android:id="@+id/ablubluble"
+            tools:layout_editor_absoluteY="370dp" tools:layout_editor_absoluteX="44dp"/>
+    <Button
+            android:text="@string/eleGostaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/eleGostaButton"
+            tools:layout_editor_absoluteY="371dp" tools:layout_editor_absoluteX="256dp"/>
+    <Button
+            android:text="@string/pareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/pareButton"
+            tools:layout_editor_absoluteY="456dp" tools:layout_editor_absoluteX="283dp"/>
+    <Button
+            android:text="@string/dancaGatinho"
+            android:layout_width="129dp"
+            android:layout_height="47dp" android:id="@+id/dancaGatinho"
+            tools:layout_editor_absoluteY="459dp" tools:layout_editor_absoluteX="44dp"/>
+    <androidx.constraintlayout.helper.widget.Flow android:layout_width="wrap_content"
+                                                  android:layout_height="wrap_content" android:id="@+id/flow_left_oraf"
+                                                  app:constraint_referenced_ids="cavaloButton,ablubluble,dancaGatinho"
+                                                  app:flow_wrapMode="aligned" android:orientation="vertical"
+                                                  app:layout_constraintTop_toTopOf="parent"
+                                                  android:layout_marginTop="232dp"
+                                                  app:layout_constraintEnd_toStartOf="@+id/eleGostaButton"
+                                                  android:layout_marginEnd="56dp"
+                                                  app:layout_constraintStart_toStartOf="parent"
+                                                  app:layout_constraintHorizontal_bias="1.0"/>
+    <androidx.constraintlayout.helper.widget.Flow android:layout_width="wrap_content"
+                                                  android:layout_height="wrap_content" android:id="@+id/flow_right_oraf"
+                                                  app:constraint_referenced_ids="uiButton,eleGostaButton,pareButton"
+                                                  android:orientation="vertical" app:flow_wrapMode="chain"
+                                                  app:layout_constraintTop_toTopOf="parent"
+                                                  android:layout_marginTop="232dp"
+                                                  app:layout_constraintEnd_toEndOf="parent"
+                                                  android:layout_marginEnd="44dp"/>
+
+    <!--<include layout="@layout/content_swipe_right"/> por isso ele vem e vai embora!-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
