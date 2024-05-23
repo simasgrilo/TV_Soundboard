@@ -23,6 +23,7 @@
     <string name="comboButton">Combo</string>
     <string name="rapazButton">RAPAZZZZ</string>
     <string name="ihaButton">IIHAAA!</string>
+    <string name="naoPaiButton">É o pai?</string>
 
     <string name="cavaloButton">CAVALO</string>
     <string name="uiButton">UUUUIIII</string>
@@ -40,6 +41,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="parar_audio">Parar áudio</string>
 
 
 </resources>

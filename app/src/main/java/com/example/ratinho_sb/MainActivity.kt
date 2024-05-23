@@ -51,16 +51,18 @@ class MainActivity : AppCompatActivity() {
         val rapazButton : Button = findViewById(R.id.buttonRapaz)
         val comboButton : Button = findViewById(R.id.buttonCombo)
         val ihaButton : Button = findViewById(R.id.ihaButton)
+        val naoPaiButton : Button = findViewById(R.id.buttonNaoPai);
 
         val uepaButtonSb = setButtons(uepaButton,"UEPAAAAA - Eu não deixava",Toast.LENGTH_SHORT,R.raw.uepaaa)
         val ratinhoButtonSb = setButtons(ratinhoButton,"RATINHOOOO",Toast.LENGTH_SHORT,R.raw.ratinhoooo)
         val rapazButtonSb = setButtons(rapazButton,"Rapaaaaz, que coisa...",Toast.LENGTH_SHORT,R.raw.rapazzz)
         val comboButtonSb = setButtons(comboButton,"Combo master blaster",Toast.LENGTH_SHORT,R.raw.combo)
         val ihaButtonSb = setButtons(ihaButton, toastStr="Ihaaaaaaa", toastLen=Toast.LENGTH_SHORT, R.raw.iha)
+        val naoPaiButtonSb = setButtons(naoPaiButton, toastStr = "É o pai?", toastLen=Toast.LENGTH_SHORT, R.raw.nao_pai)
 
         //TODO a better way to control all buttons?
         val soundButtons : MutableList<MediaPlayer> = mutableListOf(uepaButtonSb,ratinhoButtonSb,rapazButtonSb,
-        comboButtonSb,ihaButtonSb)
+        comboButtonSb,ihaButtonSb, naoPaiButtonSb)
 
 
         val stopButton : Button = findViewById(R.id.buttonEmergencyStop)
