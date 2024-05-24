@@ -13,37 +13,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttonUepa"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="28dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="276dp"/>
+            tools:layout_editor_absoluteY="271dp" tools:layout_editor_absoluteX="227dp"/>
     <Button
             android:text="@string/ratinhoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttonRatinho"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="276dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="60dp"/>
+            tools:layout_editor_absoluteY="211dp" tools:layout_editor_absoluteX="72dp"/>
     <Button
             android:text="@string/rapazButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttonRapaz"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="32dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="160dp"/>
+            tools:layout_editor_absoluteY="208dp" tools:layout_editor_absoluteX="248dp"/>
     <Button
             android:text="@string/comboButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttonCombo"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.56" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="288dp"/>
+            tools:layout_editor_absoluteY="276dp" tools:layout_editor_absoluteX="88dp"/>
     <Button
             android:text="@string/ihaButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/ihaButton"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="160dp" android:layout_marginStart="88dp"/>
+            tools:layout_editor_absoluteY="340dp" tools:layout_editor_absoluteX="92dp"/>
+
+    <Button
+            android:text="@string/naoPaiButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/buttonNaoPai"
+            android:visibility="visible"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="352dp"/>
+
+    <androidx.constraintlayout.helper.widget.Flow android:layout_width="305dp"
+                                                  android:layout_height="255dp" android:id="@+id/flow"
+                                                  app:constraint_referenced_ids="buttonCombo,buttonRapaz,ihaButton,buttonRatinho,buttonNaoPai,buttonUepa"
+                                                  android:orientation="horizontal" app:flow_wrapMode="aligned"
+                                                  app:layout_constraintTop_toTopOf="parent"
+                                                  android:layout_marginTop="172dp"
+                                                  app:layout_constraintEnd_toEndOf="parent"
+                                                  android:layout_marginEnd="44dp">
+
+    </androidx.constraintlayout.helper.widget.Flow>
     <!-- <androidx.fragment.app.FragmentContainerView
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="329dp"

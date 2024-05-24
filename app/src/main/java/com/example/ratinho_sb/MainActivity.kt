@@ -1,15 +1,12 @@
 package com.example.ratinho_sb
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import android.media.MediaPlayer
-import android.media.MediaSyncEvent
-import android.provider.MediaStore.Audio.Media
 import android.view.MotionEvent
-import androidx.core.net.toUri
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 import android.content.Intent
 import android.net.Uri
@@ -18,11 +15,11 @@ import android.renderscript.ScriptGroup.Input
 import android.util.Log
 import android.util.Xml
 import android.view.GestureDetector
-import android.view.View
-import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.view.GestureDetectorCompat
+import androidx.fragment.app.FragmentManager
+import com.example.ratinho_sb.databinding.ActivityMainBinding
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
@@ -32,10 +29,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mDetector : GestureDetectorCompat //lateinit: avisa ao compiler que esse cara não vai ser inicializado agora. Isso evita nullchecks
     private var startPressTime = 0L
+    private lateinit var binding : ActivityMainBinding
+    private lateinit var fragmentManager: FragmentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
         //var layout : ConstraintLayout = findViewById(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        fragmentManager = supportFragmentManager
+        fragmentManager.beginTransaction().replace(R.id.fragment_container_view, RatinhoFragment()).commit()
+
 
         val gestureListnener = object : MyGestureListener(){
             override fun onSwipeRight(){
@@ -45,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
         mDetector = GestureDetectorCompat(this, gestureListnener)
 
-
+/*
         val uepaButton : Button = findViewById(R.id.buttonUepa)
         val ratinhoButton : Button = findViewById(R.id.buttonRatinho)
         val rapazButton : Button = findViewById(R.id.buttonRapaz)
@@ -60,23 +65,29 @@ class MainActivity : AppCompatActivity() {
         val ihaButtonSb = setButtons(ihaButton, toastStr="Ihaaaaaaa", toastLen=Toast.LENGTH_SHORT, R.raw.iha)
         val naoPaiButtonSb = setButtons(naoPaiButton, toastStr = "É o pai?", toastLen=Toast.LENGTH_SHORT, R.raw.nao_pai)
 
-        //TODO a better way to control all buttons?
+        //TODO a better way to control all buttons? -> property container?
         val soundButtons : MutableList<MediaPlayer> = mutableListOf(uepaButtonSb,ratinhoButtonSb,rapazButtonSb,
         comboButtonSb,ihaButtonSb, naoPaiButtonSb)
 
-
+        */
         val stopButton : Button = findViewById(R.id.buttonEmergencyStop)
         stopButton.setOnClickListener(){
-            Toast.makeText(this,"Parando todos os áudios...", Toast.LENGTH_SHORT).show()
-            //this.recreate()
-            soundButtons.forEach {
-                if (it.isPlaying()) {
-                    it.stop()
-                    it.prepare()
-                }
-            }
+            this@MainActivity.stopAudio();
         }
 
+    }
+
+    private fun stopAudio() {
+        Toast.makeText(this,"Parando todos os áudios...", Toast.LENGTH_SHORT).show()
+        @Suppress("UNCHECKED_CAST")
+        //intent below returns the intent that initalized this activity
+        val soundButtons : Array<MediaPlayer> = this@MainActivity.intent.extras?.get("ratinhoButtonList") as Array<MediaPlayer>
+        soundButtons.forEach {
+            if (it.isPlaying()) {
+                it.stop()
+                it.prepare()
+            }
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -117,7 +128,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+//TODO below will go to property container (or inside the fragment)
+    /*
     fun setButtons(button: Button, toastStr: String, toastLen: Int, rawFile: Int) : MediaPlayer {
         val butSound = MediaPlayer.create(this, rawFile)
         button.setOnTouchListener(){ v, event ->
@@ -187,6 +199,8 @@ class MainActivity : AppCompatActivity() {
             resFile.write(buffer,0,read)
         }
     }
+    */
+     */
 
 
 }
