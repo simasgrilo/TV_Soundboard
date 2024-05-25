@@ -39,37 +39,22 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.fragment_container_view, RatinhoFragment()).commit()
+        fragmentManager.beginTransaction().replace(R.id.fragment_container_view, RatinhoFragment(),"RatinhoFragment").commit()
 
 
         val gestureListnener = object : MyGestureListener(){
             override fun onSwipeRight(){
-                val i : Intent = Intent(this@MainActivity,SwipeRight::class.java)
-                startActivity(i)
+                /*val i : Intent = Intent(this@MainActivity,SwipeRight::class.java)
+                startActivity(i)*/
+                fragmentManager.beginTransaction().replace(R.id.fragment_container_view, OrafFragment(), "OrafFragment").commit()
+            }
+
+            override fun onSwipeLeft() {
+                fragmentManager.beginTransaction().replace(R.id.fragment_container_view, RatinhoFragment(), "RatinhoFragment").commit()
             }
         }
         mDetector = GestureDetectorCompat(this, gestureListnener)
 
-/*
-        val uepaButton : Button = findViewById(R.id.buttonUepa)
-        val ratinhoButton : Button = findViewById(R.id.buttonRatinho)
-        val rapazButton : Button = findViewById(R.id.buttonRapaz)
-        val comboButton : Button = findViewById(R.id.buttonCombo)
-        val ihaButton : Button = findViewById(R.id.ihaButton)
-        val naoPaiButton : Button = findViewById(R.id.buttonNaoPai);
-
-        val uepaButtonSb = setButtons(uepaButton,"UEPAAAAA - Eu não deixava",Toast.LENGTH_SHORT,R.raw.uepaaa)
-        val ratinhoButtonSb = setButtons(ratinhoButton,"RATINHOOOO",Toast.LENGTH_SHORT,R.raw.ratinhoooo)
-        val rapazButtonSb = setButtons(rapazButton,"Rapaaaaz, que coisa...",Toast.LENGTH_SHORT,R.raw.rapazzz)
-        val comboButtonSb = setButtons(comboButton,"Combo master blaster",Toast.LENGTH_SHORT,R.raw.combo)
-        val ihaButtonSb = setButtons(ihaButton, toastStr="Ihaaaaaaa", toastLen=Toast.LENGTH_SHORT, R.raw.iha)
-        val naoPaiButtonSb = setButtons(naoPaiButton, toastStr = "É o pai?", toastLen=Toast.LENGTH_SHORT, R.raw.nao_pai)
-
-        //TODO a better way to control all buttons? -> property container?
-        val soundButtons : MutableList<MediaPlayer> = mutableListOf(uepaButtonSb,ratinhoButtonSb,rapazButtonSb,
-        comboButtonSb,ihaButtonSb, naoPaiButtonSb)
-
-        */
         val stopButton : Button = findViewById(R.id.buttonEmergencyStop)
         stopButton.setOnClickListener(){
             this@MainActivity.stopAudio();
@@ -81,13 +66,27 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this,"Parando todos os áudios...", Toast.LENGTH_SHORT).show()
         @Suppress("UNCHECKED_CAST")
         //intent below returns the intent that initalized this activity
-        val soundButtons : Array<MediaPlayer> = this@MainActivity.intent.extras?.get("ratinhoButtonList") as Array<MediaPlayer>
-        soundButtons.forEach {
-            if (it.isPlaying()) {
-                it.stop()
-                it.prepare()
+        val ratinhoFragment = this@MainActivity.supportFragmentManager.findFragmentByTag("RatinhoFragment")
+        val orafFragment = this@MainActivity.supportFragmentManager.findFragmentByTag("OrafFragment")
+        if (ratinhoFragment != null) {
+            val soundButtonsRatinho : Array<MediaPlayer> = this@MainActivity.intent.extras?.get("ratinhoButtonList") as Array<MediaPlayer>
+            soundButtonsRatinho.forEach {
+                if (it.isPlaying()) {
+                    it.stop()
+                    it.prepare()
+                }
             }
         }
+        if (orafFragment != null) {
+            val soundButtonsOraf : Array<MediaPlayer> = this@MainActivity.intent.extras?.get("orafButtonList") as Array<MediaPlayer>
+            soundButtonsOraf.forEach {
+                if (it.isPlaying()) {
+                    it.stop()
+                    it.prepare()
+                }
+            }
+        }
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -98,14 +97,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    //open: faz a classe não ser final. por definição, classes em kotlin são final.
     open class MyGestureListener : GestureDetector.SimpleOnGestureListener() {
         private val SWIPE_THRESHOLD : Int = 30
         private val SWIPE_VELOCITY : Int = 100
         open fun onSwipeRight(){}
         open fun onSwipeLeft(){}
-
-
         override fun onDown(e: MotionEvent?): Boolean {
             return true
         }
@@ -127,80 +123,5 @@ class MainActivity : AppCompatActivity() {
             return result
         }
     }
-
-//TODO below will go to property container (or inside the fragment)
-    /*
-    fun setButtons(button: Button, toastStr: String, toastLen: Int, rawFile: Int) : MediaPlayer {
-        val butSound = MediaPlayer.create(this, rawFile)
-        button.setOnTouchListener(){ v, event ->
-            val movAction = event.action
-            var endTime = 0L
-
-            when(movAction){
-                MotionEvent.ACTION_DOWN ->{
-                    //event.getPointerId(event.actionIndex)
-                    startPressTime = SystemClock.elapsedRealtime()
-                }
-                MotionEvent.ACTION_CANCEL,
-                MotionEvent.ACTION_UP -> {
-                    endTime = SystemClock.elapsedRealtime()
-                    if (endTime - startPressTime > 1000){ //share the file
-                        try{
-                            val fileStream = resources.openRawResource(rawFile)
-                            val soundToShare = File.createTempFile("soundEffect",".mp3")
-                            //copies the sound to a temp file
-                            this.copyFile(fileStream, FileOutputStream(soundToShare))
-                            val fileUri = FileProvider.getUriForFile(applicationContext,
-                                BuildConfig.APPLICATION_ID + ".provider",
-                                soundToShare)
-                            val sendIntent : Intent = Intent().apply {
-                                action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_STREAM, fileUri)
-                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                //type = "plain/text"
-                                type = "audio/*"
-                            }
-                            startActivity(Intent.createChooser(sendIntent,null))
-                        }
-                        catch (e : java.lang.Exception){
-                            e.printStackTrace()
-                        }
-                    }
-                    else{ //sound
-                        val butToast = Toast.makeText(this, toastStr, toastLen)
-                        butToast.show()
-                        //val butSound = MediaPlayer.create(this, rawFile)
-                        print(butSound.toString())
-                        if (butSound.isPlaying()){
-                            butSound.stop()
-                            butSound.prepare()
-                            butSound.start()
-                        }
-                        else
-                            butSound.start()
-                    }
-                    true
-                    startPressTime = 0L
-                }
-                else -> {}
-            }
-            false
-        }
-        return butSound;
-
-    }
-    fun copyFile(originFile : InputStream, resFile: OutputStream){
-        val buffer = ByteArray(1024);
-        var read: Int
-        read = 0
-        while( read != -1) {
-            read = originFile.read(buffer)
-            if (read == -1) break;
-            resFile.write(buffer,0,read)
-        }
-    }
-    */
-     */
-
 
 }
